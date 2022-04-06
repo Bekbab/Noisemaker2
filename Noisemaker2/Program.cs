@@ -15,6 +15,7 @@ namespace Noisemaker2
         static void Main(string[] args)
         {
             Raylib.InitWindow(windowWidth, widnowHeight, "Music player");
+            Raylib.SetTargetFPS(60);
             Raylib.InitAudioDevice();
             SoundPlayer player = new SoundPlayer();
 

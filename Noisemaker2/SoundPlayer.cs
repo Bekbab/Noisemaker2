@@ -22,6 +22,10 @@ namespace Noisemaker2
         public static bool torskMode = false;
 
         Texture2D torskImage;
+
+        bool testMode;
+
+        Songbutton testButton;
         public SoundPlayer()
         {
             List<string> songNames = new List<string>()  //adds all the song titles to the list "soundNames"
@@ -32,6 +36,7 @@ namespace Noisemaker2
                 "Intergalactic_Odyssey",
                 "Interplanetary_Odyssey",
                 "No_Place_For_Straw_Cowboys",
+                "Shinrin_Yoku",
                 "torsk"
             };
             songs = new Dictionary<string, Music>();
@@ -40,6 +45,8 @@ namespace Noisemaker2
             {
                 songs.Add(name, Raylib.LoadMusicStream(name + ".ogg"));
             }
+
+            songs.Add("test", Raylib.LoadMusicStream("test.ogg"));
 
             musicQueue = new Queue<string>();
 
@@ -61,10 +68,13 @@ namespace Noisemaker2
         }
         public Music GetSong()
         {
-            currentSongString = musicQueue.Peek();  //peeks at what song title is currently in queue
-            currentSong = songs[currentSongString]; //gets which song that title refers to
-            return currentSong;
+            if (!IsQueueEmpty())
+            {
+                currentSongString = musicQueue.Peek();  //peeks at what song title is currently in queue
+                currentSong = songs[currentSongString]; //gets which song that title refers to
+            }
 
+            return currentSong;
         }
         public void PlayPause() //pauses or plays the music
         {
@@ -94,9 +104,7 @@ namespace Noisemaker2
         {
             if (torskMode)
             {
-
                 Raylib.PlayMusicStream(GetSong());
-
             }
             else
             {
@@ -116,6 +124,7 @@ namespace Noisemaker2
                 {
                     Raylib.PlayMusicStream(GetSong());
                 }
+
             }
 
         }
@@ -125,17 +134,18 @@ namespace Noisemaker2
             if (!IsQueueEmpty())
             {
 
+                if (Raylib.GetMusicTimePlayed(GetSong()) >= Raylib.GetMusicTimeLength(GetSong()) - 0.1) //if the song has reached its end... (needs to remove one frame from the song to give it an attempt to skip)
+                {
+
+                    Skip(); //...it skips to the next song (This doesnt work)
+                }
+
                 if (currentSongString == "torsk")
                 {
                     torskMode = true;
                 }
                 else
                 {
-
-                    if (Raylib.GetMusicTimePlayed(GetSong()) >= Raylib.GetMusicTimeLength(GetSong())) //if the song has reached its end...
-                    {
-                        Skip(); //...it skips to the next song (This doesnt work)
-                    }
                     foreach (Songbutton button in buttons)
                     {
                         button.Update();
@@ -152,6 +162,22 @@ namespace Noisemaker2
             else
             {
                 progbar.Update(0, 0);
+
+                if (Raylib.IsKeyPressed(KeyboardKey.KEY_T))
+                {
+                    testMode = !testMode;
+
+                    if (!testMode)
+                    {
+                        buttons.Add(testButton = new Songbutton("test", 850));
+                        testButton.button.x = 20;
+                    }
+                    else
+                    {
+                        buttons.Remove(testButton);
+                    }
+                }
+
                 foreach (Songbutton button in buttons)
                 {
                     button.Update();

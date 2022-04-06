@@ -7,7 +7,7 @@ namespace Noisemaker2
 {
     public class Songbutton
     {
-        Rectangle button;
+        public Rectangle button;
         int width;
 
         bool isHovering;
