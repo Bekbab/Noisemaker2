@@ -16,32 +16,40 @@ namespace Noisemaker2
 
         public Songbutton(string songName, float recY)
         {
-            if (songName == "torsk")
+            if (songName == "torsk") //get out of here!
             {
-                recY = 850;
+                recY = 880;
             }
+
+            //Measure text width and defines the button so it is drawn in the center of the screen
             width = Raylib.MeasureText(songName, Program.fontSize);
             button = new Rectangle((Program.windowWidth / 2) - (width / 2), recY, width + 10, Program.fontSize + 10);
+
+            if (songName == "torsk") //get out of here!
+            {
+                button.x = -5;
+            }
+
             name = songName;
 
         }
 
-        bool getHover()
+        bool getHover() //checks if you are hovering over the button
         {
             if (Raylib.CheckCollisionPointRec(new Vector2(Raylib.GetMouseX(), Raylib.GetMouseY()), button))
             {
-                isHovering = true;
+                isHovering = true; //you are hovering
             }
             else
             {
-                isHovering = false;
+                isHovering = false; //you are not hovering
             }
 
             return isHovering;
         }
         public void Update()
         {
-            if (getHover() && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
+            if (getHover() && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)) //click the button to enqueue the song
             {
                 SoundPlayer.musicQueue.Enqueue(name);
             }
@@ -50,22 +58,22 @@ namespace Noisemaker2
         {
             if (getHover())
             {
-                if (name == "torsk")
+                if (name == "torsk") //Mind your own business
                 {
                     Raylib.DrawRectangleRec(button, Color.BROWN);
                     Raylib.DrawText("are you sure about this?", (int)button.x + 5, (int)button.y + 5, Program.fontSize, Color.GREEN);
                 }
                 else
                 {
-                    Raylib.DrawRectangleRec(button, Color.RED);
+                    Raylib.DrawRectangleRec(button, Color.RED); //if you're hovering over the button it turns red (shows that it's clickable)...
                 }
             }
             else
             {
-                Raylib.DrawRectangleRec(button, Color.GRAY);
+                Raylib.DrawRectangleRec(button, Color.GRAY); //...it's otherwise gray
             }
 
-            if (name == "torsk" && !getHover())
+            if (name == "torsk" && !getHover()) //like I said, this is nothing of importance
             {
                 Raylib.DrawText(name, (int)button.x + 5, (int)button.y + 5, Program.fontSize, Color.BLACK);
             }
