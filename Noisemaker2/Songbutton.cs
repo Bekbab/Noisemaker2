@@ -34,7 +34,7 @@ namespace Noisemaker2
 
         }
 
-        bool getHover() //checks if you are hovering over the button
+        bool GetHover() //checks if you are hovering over the button
         {
             if (Raylib.CheckCollisionPointRec(new Vector2(Raylib.GetMouseX(), Raylib.GetMouseY()), button))
             {
@@ -49,14 +49,14 @@ namespace Noisemaker2
         }
         public void Update()
         {
-            if (getHover() && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)) //click the button to enqueue the song
+            if (GetHover() && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)) //click the button to enqueue the song
             {
                 SoundPlayer.musicQueue.Enqueue(name);
             }
         }
         public void Draw()
         {
-            if (getHover())
+            if (GetHover())
             {
                 if (name == "torsk") //Mind your own business
                 {
@@ -73,7 +73,7 @@ namespace Noisemaker2
                 Raylib.DrawRectangleRec(button, Color.GRAY); //...it's otherwise gray
             }
 
-            if (name == "torsk" && !getHover()) //like I said, this is nothing of importance
+            if (name == "torsk" && !GetHover()) //like I said, this is nothing of importance
             {
                 Raylib.DrawText(name, (int)button.x + 5, (int)button.y + 5, Program.fontSize, Color.BLACK);
             }
