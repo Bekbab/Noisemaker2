@@ -15,7 +15,6 @@ namespace Noisemaker2
         {
             background = new Rectangle((Program.windowWidth / 2) - 300, 700, 600, 10); //the progress background is defined, it is centered in the screen
             progress = new Rectangle(background.x, background.y, 0, background.height); //progress rec is based on background with undefined width
-
         }
         public void Update(float played, float length) //update method needs the song length and how long it has been playing for
         {
